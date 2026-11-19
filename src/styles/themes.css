@@ -1,0 +1,77 @@
+/* =========================================================================
+   Three themes. Role colours keep the same meaning everywhere:
+   head=blue  curr=yellow  new=pink  second=purple  done=green  danger=red
+   ========================================================================= */
+:root {
+  --font-hand: 'Caveat', 'Comic Sans MS', cursive;
+  --font-body: 'Atkinson Hyperlegible', system-ui, sans-serif;
+  --font-head: 'Caveat', cursive;
+  --font-block: 'Bricolage Grotesque', 'Atkinson Hyperlegible', sans-serif;
+  --font-code: 'JetBrains Mono', ui-monospace, monospace;
+  --scale: 1;
+}
+
+/* ---------- MIX (default): chalk board + solid blocks ---------- */
+html[data-theme='mix'],
+html[data-theme='chalk'] {
+  --bg: #1e2b28;
+  --bg2: #243430;
+  --bg3: #2b3d38;
+  --ink: #0f1715;
+  --text: #ecebe4;
+  --dim: #9fb0aa;
+  --faint: #6f817b;
+  --rule: rgba(236, 235, 228, 0.2);
+  --head: #8ecae6;
+  --curr: #f6d55c;
+  --new: #f5a3b9;
+  --second: #c9b3ff;
+  --done: #9be3b0;
+  --danger: #ff8f80;
+  --muted: #6f817b;
+  --default: #ecebe4;
+  --accent: #f6d55c;
+  --accent-ink: #2a2408;
+  --code-bg: #182320;
+  --font-title: var(--font-hand);
+  --node-text: #0f1715;
+  --code-text: #dfe5df;
+  --code-kw: #8ecae6;
+  --code-str: #f5a3b9;
+  --code-num: #f6d55c;
+  --code-com: #6f817b;
+  --code-fn: #c9b3ff;
+  --code-line: rgba(246, 213, 92, 0.13);
+}
+
+/* ---------- BLOCKS: plum, chunky, saturated ---------- */
+html[data-theme='blocks'] {
+  --bg: #1d1533;
+  --bg2: #2a2047;
+  --bg3: #352a58;
+  --ink: #0d0918;
+  --text: #f4f0ff;
+  --dim: #b3a8d6;
+  --faint: #7d72a3;
+  --rule: rgba(244, 240, 255, 0.14);
+  --head: #5b8cff;
+  --curr: #ffb703;
+  --new: #ff7aa8;
+  --second: #a78bfa;
+  --done: #2ec4b6;
+  --danger: #ff5d5d;
+  --muted: #5e5385;
+  --default: #ece6ff;
+  --accent: #2ec4b6;
+  --accent-ink: #062a26;
+  --code-bg: #ece6ff;
+  --font-title: var(--font-block);
+  --node-text: #0d0918;
+  --code-text: #1d1533;
+  --code-kw: #6d28d9;
+  --code-str: #be185d;
+  --code-num: #b45309;
+  --code-com: #7d72a3;
+  --code-fn: #1d4ed8;
+  --code-line: #ffb703;
+}
