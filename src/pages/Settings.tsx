@@ -4,6 +4,7 @@ import { useProgress } from '../state/progress';
 import { mergeDocs, type ProgressDoc } from '../storage/types';
 import { signIn, signOut, supabaseConfigured } from '../storage/supabase';
 import { Say } from '../speech/Say';
+import { reader, readerSupported } from '../speech/reader';
 
 const THEMES: { id: Theme; name: string; text: string }[] = [
   { id: 'mix', name: 'Mix', text: 'Chalkboard with solid blocks. The default.' },
@@ -26,6 +27,7 @@ export function Settings() {
   const file = useRef<HTMLInputElement>(null);
   const [msg, setMsg] = useState('');
   const [email, setEmail] = useState('');
+  const [voiceMsg, setVoiceMsg] = useState('');
 
   async function onImport(f: File) {
     try {
@@ -62,6 +64,22 @@ export function Settings() {
         <label className="row">
           <input type="checkbox" checked={st.skipCode} onChange={(e) => st.set({ skipCode: e.target.checked })} /> Skip code when reading a page aloud
         </label>
+        <div className="row">
+          <button
+            className="btn"
+            onClick={async () => {
+              setVoiceMsg('Speaking…');
+              const ok = await reader.test();
+              setVoiceMsg(ok ? 'Did you hear it? If not, check your volume or pick another voice in the bottom bar.' : 'No sound came out. Pick another voice in the bottom bar, or try Chrome, Edge or Safari.');
+            }}
+            disabled={!readerSupported()}
+          >
+            🔈 Test my voice
+          </button>
+          <span className="dim" role="status">
+            {readerSupported() ? voiceMsg || `${reader.voices().length} voices available in this browser` : 'This browser has no read-aloud support.'}
+          </span>
+        </div>
         <label className="row">
           Voice speed
           <input type="range" min={0.7} max={1.6} step={0.05} value={st.rate} onChange={(e) => st.set({ rate: Number(e.target.value) })} />

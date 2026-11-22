@@ -159,6 +159,13 @@ const topic: Topic = {
   icon: '🔤',
   costs: [cost('insert word', 'O(L)'), cost('search word', 'O(L)'), cost('starts with prefix', 'O(L)'), cost('list k completions', 'O(L + k)')],
 
+  intro: {
+    what: "A trie is a tree that stores words letter by letter, so words that share a beginning share a path.",
+    why: "It is how autocomplete, spell checkers and internet routers search by prefix, in time that depends on the word’s length, not on how many words exist.",
+    builds: "Trees from topic 8 and dictionaries from topic 3.",
+    goals: ["Build a trie and mark word endings", "Tell a word apart from a prefix", "Autocomplete from a prefix", "Know when a trie beats a hash set"],
+  },
+
   hook: { frames: hook, lines: ['A trie stores words letter by letter, so words with the same start share one path.', 'That makes “what words start with ca?” instant, which is how autocomplete works.'] },
 
   watch: [

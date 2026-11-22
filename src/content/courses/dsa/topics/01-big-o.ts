@@ -1,5 +1,6 @@
 import type { Frame, Prim, Topic } from '../../../../types';
 import { arrayRow, bar, cell, cost, Frames, icon, ptr, region, scene, spread, txt } from '../../../lib/viz';
+import { bigOLesson } from '../lessons/01-big-o';
 
 /* ---------------- shared pictures ---------------- */
 const counter = (k: number | string, x = 860, y = 70, label = 'steps') => txt('counter', x, y, `${label}: ${k}`, { size: 38, role: 'curr' });
@@ -41,8 +42,8 @@ function hook(): Frame[] {
       }),
     );
   const head = [icon('i1', 245, 70, '🃏', 54), icon('i2', 750, 70, '📖', 54), txt('t1', 245, 130, 'shuffled pile', { size: 30 }), txt('t2', 750, 130, 'sorted book', { size: 30 })];
-  f.add([...head, ...pile(0), ...book(0, 7)], 'You need to find Maya. Two ways to store the names.');
-  f.add([...head, ...pile(3), ...book(0, 7)], 'In a shuffled pile you check card after card.');
+  f.add([...head, ...pile(0), ...book(0, 7)], 'A quick story first. Imagine you need to find your friend Maya’s name among some cards. The cards could be stored in two ways: as a shuffled pile, or in a sorted book.');
+  f.add([...head, ...pile(3), ...book(0, 7)], 'In the shuffled pile there is no order, so you have to turn the cards over one by one.');
   f.add([...head, ...pile(8, true), ...book(0, 7), counter(8, 245, 400, 'checks')], 'Worst case: every single card. Eight cards, eight checks.');
   f.add([...head, ...pile(8, true), ...book(0, 7, 3), counter(1, 750, 400, 'checks')], 'In a sorted book, open the middle.');
   f.add([...head, ...pile(8, true), ...book(4, 7, 5), counter(2, 750, 400, 'checks')], 'Maya comes after D, so the whole first half is gone.');
@@ -268,6 +269,13 @@ const topic: Topic = {
   icon: '📈',
   costs: [cost('Read a[i]', 'O(1)'), cost('Halve until 1', 'O(log n)'), cost('Scan a list', 'O(n)'), cost('Good sort', 'O(n log n)'), cost('All pairs', 'O(n²)')],
 
+  intro: {
+    what: "This topic is about measuring how much work a piece of code does, so you can predict whether it will still be fast when the data gets big.",
+    why: "Every later topic uses this language. When we say a dictionary lookup is O(1) or sorting is O(n log n), this is what we mean. It is also how you choose between two solutions that both give the right answer.",
+    builds: "Nothing yet: this is the starting point of the course.",
+    goals: ["Count the steps a piece of code takes", "Read and use O(1), O(log n), O(n), O(n log n) and O(n²)", "Spot slow operations hiding in ordinary Python", "Predict whether code will finish on large inputs"],
+  },
+
   hook: {
     frames: hook,
     lines: [
@@ -283,6 +291,8 @@ const topic: Topic = {
     { id: 'race', title: 'Growth race', frames: race },
     { id: 'space', title: 'Space too', frames: space, costs: [cost('Reverse into copy', 'O(n)', 'O(n)'), cost('Reverse in place', 'O(n)', 'O(1)')] },
   ],
+
+  lesson: bigOLesson({ hook, race, nested, halving, space, linear }),
 
   recall: {
     prompt: 'In your own words: what does O(n) tell you, and why do we ignore constants like the 2 in 2n?',

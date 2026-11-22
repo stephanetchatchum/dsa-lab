@@ -4,7 +4,7 @@ const course: Course = {
   id: 'dsa',
   title: 'Data Structures & Algorithms',
   short: 'Thirteen topics, from counting steps to spatial trees. Each one: watch, write, build, solve.',
-  steps: ['hook', 'watch', 'recall', 'play', 'predict', 'trace', 'build', 'fill', 'wild', 'problems', 'recap'],
+  steps: ['hook', 'lesson', 'watch', 'recall', 'play', 'predict', 'trace', 'build', 'fill', 'wild', 'problems', 'recap'],
   compare: {
     ops: ['Access by index', 'Search', 'Insert', 'Delete', 'Min / max'],
     rows: [

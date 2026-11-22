@@ -31,8 +31,10 @@ export const getTopic = (cid: string, tid: string) => getCourse(cid)?.topics.fin
 export const topicKey = (cid: string, tid: string) => `${cid}/${tid}`;
 
 const has: Record<StepKind, (t: Topic) => boolean> = {
-  hook: (t) => !!t.hook,
+  /** topics with a full lesson introduce the analogy inside it, after the concept */
+  hook: (t) => !!t.hook && !t.lesson?.length,
   watch: (t) => !!t.watch?.length,
+  lesson: (t) => !!t.lesson?.length,
   recall: (t) => !!t.recall,
   play: (t) => !!t.play,
   predict: (t) => !!t.predict?.length,
@@ -50,6 +52,7 @@ export const stepsFor = (c: Course, t: Topic): StepKind[] => c.steps.filter((k) 
 export const STEP_LABEL: Record<StepKind, string> = {
   hook: 'Hook',
   watch: 'Watch it',
+  lesson: 'Learn the concept',
   recall: 'Write it back',
   play: 'Play with it',
   predict: 'Predict',

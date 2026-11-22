@@ -188,6 +188,13 @@ const topic: Topic = {
   icon: '🪆',
   costs: [cost('fact(n): n calls', 'O(n)', 'O(n)'), cost('naive fib(n)', 'O(2ⁿ)', 'O(n)'), cost('all subsets', 'O(2ⁿ)'), cost('all orderings', 'O(n!)')],
 
+  intro: {
+    what: "Recursion is a function solving a problem by calling itself on a smaller version of it. Backtracking uses recursion to try choices and undo them.",
+    why: "Trees, graphs, divide-and-conquer sorting and dynamic programming are all built on recursion. Many search problems are backtracking in disguise.",
+    builds: "Stacks from topic 4: every recursive call waits on the call stack.",
+    goals: ["Write a base case and a recursive case", "Picture the call stack and recursion tree", "Explain why some recursion explodes exponentially", "Generate subsets and orderings with backtracking"],
+  },
+
   hook: { frames: hook, lines: ['Recursion solves a problem by handing a smaller version of it to yourself.', 'It needs a base case that answers directly, or the questions never stop.'] },
 
   watch: [

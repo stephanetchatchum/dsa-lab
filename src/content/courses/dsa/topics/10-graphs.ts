@@ -283,6 +283,13 @@ const topic: Topic = {
   icon: '🕸️',
   costs: [cost('BFS / DFS', 'O(V + E)'), cost('Dijkstra (heap)', 'O(E log V)'), cost('topological sort', 'O(V + E)'), cost('union-find op', 'O(α(n))')],
 
+  intro: {
+    what: "A graph is a set of things connected by relationships: places and roads, people and friendships, tasks and their dependencies.",
+    why: "Maps, social networks, the internet and build systems are graphs. A handful of algorithms, BFS, DFS, Dijkstra, topological sort and union-find, answer their core questions.",
+    builds: "Queues and stacks from topic 4, heaps from topic 8, and recursion from topic 6.",
+    goals: ["Store a graph as an adjacency list", "Explore with BFS and DFS, and know which to use", "Find shortest weighted paths with Dijkstra", "Order tasks with topological sort and track groups with union-find"],
+  },
+
   hook: { frames: hook, lines: ['A graph is things (nodes) connected by relationships (edges).', 'Maps, social networks, the web and course prerequisites are all graphs.'] },
 
   watch: [

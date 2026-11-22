@@ -4,11 +4,12 @@ import { getCourse, getTopic, STEP_LABEL, stepsFor, topicKey } from '../content/
 import { ensureTopic, useProgress } from '../state/progress';
 import { useSettings } from '../state/settings';
 import { go, href } from '../router';
-import { speaker } from '../speech/speaker';
+import { reader } from '../speech/reader';
 import { ReaderBar } from '../speech/ReaderBar';
 import type { StepProps } from '../steps/common';
 import { HookStep } from '../steps/HookStep';
 import { WatchStep } from '../steps/WatchStep';
+import { LessonStep } from '../steps/LessonStep';
 import { RecallStep } from '../steps/RecallStep';
 import { PlayStep } from '../steps/PlayStep';
 import { PredictStep } from '../steps/PredictStep';
@@ -23,6 +24,7 @@ import { RecapStep } from '../steps/RecapStep';
 const STEP_VIEW: Record<StepKind, ComponentType<StepProps>> = {
   hook: HookStep,
   watch: WatchStep,
+  lesson: LessonStep,
   recall: RecallStep,
   play: PlayStep,
   predict: PredictStep,
@@ -52,7 +54,7 @@ export function TopicPage({ cid, tid, stepParam }: { cid: string; tid: string; s
     if (!topic) return;
     if (saved.step !== idx) update((d) => void (ensureTopic(d, pkey).step = idx));
     setCanNextRaw(true);
-    speaker.cancel();
+    reader.reset();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [idx, pkey]);
 

@@ -238,6 +238,13 @@ const topic: Topic = {
   icon: '🌳',
   costs: [cost('BST search/insert (balanced)', 'O(log n)'), cost('…unbalanced worst case', 'O(n)'), cost('traversal', 'O(n)'), cost('heap push / pop', 'O(log n)'), cost('heap peek min', 'O(1)')],
 
+  intro: {
+    what: "Trees store data as a hierarchy: one root with branches. Binary search trees keep data sorted; heaps always know the smallest item.",
+    why: "Databases, file systems, web pages and priority schedulers are trees. Balanced trees give O(log n) for almost everything.",
+    builds: "Recursion from topic 6, linked nodes from topic 5, and queues from topic 4 for level-order traversal.",
+    goals: ["Traverse a tree in four orders", "Search and insert in a binary search tree", "Explain why balance matters", "Use a heap as a priority queue"],
+  },
+
   hook: { frames: hook, lines: ['A tree is a hierarchy: one root, branches, and leaves at the ends.', 'Keep it balanced and you can reach any of a million nodes in about 20 steps.'] },
 
   watch: [

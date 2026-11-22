@@ -184,6 +184,13 @@ const topic: Topic = {
   icon: '📚',
   costs: [cost('insertion sort', 'O(n²)', 'O(1)'), cost('merge sort', 'O(n log n)', 'O(n)'), cost('quick sort (avg)', 'O(n log n)', 'O(log n)'), cost('binary search', 'O(log n)', 'O(1)')],
 
+  intro: {
+    what: "Sorting puts data in order. Binary search then finds things in sorted data by halving the search space each step.",
+    why: "Sorted data unlocks fast searching, and sorting is the first step of many other algorithms, from scheduling to geometry.",
+    builds: "Big-O from topic 1 and recursion from topic 6, since merge sort and quick sort are recursive.",
+    goals: ["Explain insertion sort, merge sort and quick sort", "Know why merge sort is always O(n log n)", "Write a correct binary search", "Binary-search on the answer, not just on a list"],
+  },
+
   hook: { frames: hook, lines: ['Sorting is how you put a hand of cards in order.', 'Once data is sorted, binary search finds anything by halving: a million items in about 20 steps.'] },
 
   watch: [

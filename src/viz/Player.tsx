@@ -1,9 +1,8 @@
-import { useEffect, useId, useMemo, useRef, useState, type ReactNode } from 'react';
+import { useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { fitBox } from './bounds';
 import type { Cost, Frame } from '../types';
 import { useSettings } from '../state/settings';
-import { speaker } from '../speech/speaker';
-import { Say } from '../speech/Say';
+import { reader } from '../speech/reader';
 import { Stage } from './Stage';
 import { CodeView, CostMeter, Vars } from './CodeView';
 
@@ -33,7 +32,7 @@ export function Player({
   const st = useSettings();
   const [i, setI] = useState(0);
   const [playing, setPlaying] = useState(autoPlay);
-  const capId = useId();
+  const capRef = useRef<HTMLDivElement>(null);
   const f = frames[Math.min(i, frames.length - 1)];
   const box = useMemo(() => fitBox(frames.map((x) => x.scene)), [frames]);
   const prev = i > 0 ? frames[i - 1] : undefined;
@@ -53,7 +52,7 @@ export function Player({
     const my = ++run.current;
     const tween = 650 / st.speed;
     (async () => {
-      const speech = st.narrate && f && (playing || touched.current) ? speaker.speak(f.say, capId) : Promise.resolve(true);
+      const speech = st.narrate && f && (playing || touched.current) ? reader.narrate(capRef.current, f.caption ?? f.say) : Promise.resolve(true);
       if (!playing) return;
       await Promise.all([speech, sleep(tween + 700 / st.speed)]);
       if (my !== run.current) return;
@@ -70,7 +69,7 @@ export function Player({
   }, [i, playing, frames]);
 
   // stop voice on unmount
-  useEffect(() => () => speaker.cancel(), []);
+  useEffect(() => () => reader.cancelNarration(), []);
 
   if (!f) return null;
   const go = (n: number) => {
@@ -82,8 +81,8 @@ export function Player({
   const stage = (
     <div>
       <Stage scene={f.scene} ms={650 / st.speed} label={f.say} box={box} />
-      <div className="caption">
-        <Say key={i} id={capId} text={f.caption ?? f.say} as="div" btn={false} />
+      <div className="caption" ref={capRef} data-tts="">
+        {f.caption ?? f.say}
       </div>
       <div className="controls">
         <button className="btn" aria-label="Restart" onClick={() => go(0)}>⏮</button>

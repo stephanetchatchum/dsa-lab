@@ -236,10 +236,31 @@ export interface Problem extends CodeTask {
   complexity: { time: BigO; space: BigO };
 }
 
+/* ---------- Deep-dive lesson (long-form, read aloud line by line) ---------- */
+export type LessonBlock =
+  /** a paragraph; supports **bold** and `code`. Keep to 1–3 sentences: each paragraph is one "line" for the reader. */
+  | { p: string }
+  | { list: string[]; ordered?: boolean }
+  /** code block; `say` is what the reader speaks for it (skipped when "Skip code" is on) */
+  | { code: string; say: string }
+  /** animated figure (plays inline with its own controls) */
+  | { figure: () => Frame[]; caption: string }
+  /** static picture */
+  | { scene: Scene; caption: string }
+  | { note: string; kind: 'why' | 'pitfall' | 'python' | 'cost' | 'science' | 'remember' | 'example' }
+  /** first row is the header */
+  | { table: string[][]; caption?: string };
+
+export interface LessonSection {
+  title: string;
+  blocks: LessonBlock[];
+}
+
 /* ---------- Topic & course ---------- */
 export type StepKind =
   | 'hook'
   | 'watch'
+  | 'lesson'
   | 'recall'
   | 'play'
   | 'predict'
@@ -257,8 +278,12 @@ export interface Topic {
   /** one line, shown on the map */
   short: string;
   icon: string;
+  /** context shown first: what this topic is, why it matters, what you'll be able to do */
+  intro?: { what: string; why: string; builds?: string; goals: string[] };
   hook?: { frames: () => Frame[]; lines: string[] };
   watch?: Clip[];
+  /** the deep dive: a full narrated lesson */
+  lesson?: LessonSection[];
   recall?: { prompt: string; model: string; keywords: string[][] };
   play?: Playground<any>;
   predict?: PredictQ[];

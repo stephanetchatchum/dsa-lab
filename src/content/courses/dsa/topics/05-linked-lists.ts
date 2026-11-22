@@ -172,6 +172,13 @@ const topic: Topic = {
   icon: '🔗',
   costs: [cost('access item k', 'O(n)'), cost('search', 'O(n)'), cost('insert after a node', 'O(1)'), cost('delete after a node', 'O(1)'), cost('push front', 'O(1)')],
 
+  intro: {
+    what: "A linked list stores items in separate nodes, each one pointing to the next, instead of in one block of memory.",
+    why: "It trains you to think in pointers, which you need for trees and graphs. It is also the right tool when you insert and delete in the middle a lot.",
+    builds: "Arrays from topic 2, so you can compare the trade-offs directly.",
+    goals: ["Insert and delete by changing pointers, in the right order", "Reverse a list in one pass", "Use fast and slow pointers and dummy nodes", "Know when a linked list beats an array, and when it loses"],
+  },
+
   hook: { frames: hook, lines: ['A linked list is a treasure hunt: each node only knows where the next one is.', 'You can’t jump ahead, but you can splice in a new node by changing one arrow.'] },
 
   watch: [

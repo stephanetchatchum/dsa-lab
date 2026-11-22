@@ -164,6 +164,13 @@ const topic: Topic = {
   icon: '🥞',
   costs: [cost('push / pop (stack)', 'O(1)'), cost('enqueue / dequeue (deque)', 'O(1)'), cost('peek at top/front', 'O(1)'), cost('search inside', 'O(n)')],
 
+  intro: {
+    what: "Stacks and queues are lists with one rule about which item comes out next: the newest, or the oldest.",
+    why: "Those two rules run the undo button, the function call stack, printers and servers, and breadth-first search.",
+    builds: "Arrays from topic 2: both are usually built on top of arrays.",
+    goals: ["Explain last-in-first-out and first-in-first-out", "Match brackets with a stack", "Know why a list is a bad queue in Python, and what to use instead", "Use the monotonic-stack trick"],
+  },
+
   hook: { frames: hook, lines: ['A stack is a pile of plates: the last one on is the first one off.', 'A queue is a line at a café: the first to arrive is the first served.'] },
 
   watch: [

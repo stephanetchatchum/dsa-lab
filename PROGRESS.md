@@ -37,6 +37,15 @@ starter code does not, and every animation frame is valid.
       problem reference solution passes when run through the real in-browser Pyodide worker
 - [x] Infinite-loop kill + automatic Python restart tested
 - [x] Spaced review flow tested (due badge, review card, saved review mark)
+
+## Round 2: depth + continuous listening
+- [x] New reader: reads the whole step line by line, line box + word highlight, pause/resume, Line X of Y, Space / ← → / Esc, double-click to start
+- [x] New "Deep dive" step (long-form narrated lesson with embedded animations)
+- [x] Audio engine rewritten for cross-browser reliability (Chrome no-onend bug, Safari cancel quirks, iOS tap rule,
+      no word-boundary events, no voices). All audio controls tested against simulations of each; Settings has “Test my voice”
+- [x] Concept-first order: “Learn the concept” is step 1 and opens with context; analogy moved inside the lesson
+- [x] Lesson: 1. Big-O (sample, awaiting approval)
+- [ ] Lessons for topics 2–13 (same structure: where this fits → what it is → picture it → how it works → why → costs → Python → pitfalls → science → summary)
 - [x] README (setup, run, deploy, Supabase, adding topics/courses)
 
 **Status: complete.** 13 topics, 39 problems, 351 reference tests passing.

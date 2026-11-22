@@ -89,6 +89,13 @@ for (const course of readdirSync(coursesDir)) {
     if (t.hook) checkFrames('hook', t.hook.frames());
     t.watch?.forEach((c) => checkFrames(`watch:${c.id}`, c.frames()));
     if (t.trace) checkFrames('trace', t.trace.frames());
+    t.lesson?.forEach((sec, si) =>
+      sec.blocks.forEach((b, bi) => {
+        if ('figure' in b) checkFrames(`lesson:${si}.${bi}`, b.figure());
+        if ('scene' in b) checkFrames(`lesson:${si}.${bi}:scene`, [{ scene: b.scene, say: b.caption }]);
+        if ('p' in b && b.p.length > 420) fail(`lesson:${si}.${bi}`, 'paragraph too long for one reading line (> 420 chars)');
+      }),
+    );
     t.predict?.forEach((q) => {
       checkFrames(`predict:${q.id}`, q.frames());
       checkFrames(`predict:${q.id}:scene`, [{ scene: q.scene, say: 'scene' }]);

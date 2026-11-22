@@ -193,6 +193,13 @@ const topic: Topic = {
   icon: '🧮',
   costs: [cost('Read a[i]', 'O(1)'), cost('Append', 'O(1)'), cost('Insert/delete middle', 'O(n)'), cost('Search unsorted', 'O(n)'), cost('Range sum (prefix)', 'O(1)')],
 
+  intro: {
+    what: "Arrays, which Python calls lists, store many values in order, side by side in one block of memory.",
+    why: "Almost every program uses them. Three techniques on arrays, two pointers, sliding windows and prefix sums, solve a huge share of real problems in linear time.",
+    builds: "Big-O from topic 1, to explain why some list operations are instant and others are slow.",
+    goals: ["Explain why reading a[i] is instant but inserting at the front is slow", "Use two pointers on sorted data", "Use a sliding window instead of re-adding everything", "Answer any range-sum question in one step with prefix sums"],
+  },
+
   hook: {
     frames: hook,
     lines: ['An array is a row of numbered seats in one block of memory.', 'Jumping to a seat is instant. Squeezing someone into the middle makes everyone move.'],

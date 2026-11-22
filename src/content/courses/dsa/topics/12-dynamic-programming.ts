@@ -150,6 +150,13 @@ const topic: Topic = {
   icon: '🧱',
   costs: [cost('fib (memoised)', 'O(n)', 'O(n)'), cost('min coins', 'O(n·k)', 'O(n)'), cost('grid paths', 'O(n·m)', 'O(n·m)'), cost('LCS of two strings', 'O(n·m)', 'O(n·m)')],
 
+  intro: {
+    what: "Dynamic programming solves a big problem by solving each smaller version once, saving the answers, and building up.",
+    why: "It turns impossibly slow recursive solutions into fast ones. It powers DNA alignment, diff tools, spell checkers and route planning.",
+    builds: "Recursion from topic 6 and the greedy failure from topic 11.",
+    goals: ["Spot overlapping subproblems", "Memoise a recursive function", "Fill a 1D and a 2D table bottom-up", "Solve coin change correctly where greedy fails"],
+  },
+
   hook: { frames: hook, lines: ['Dynamic programming solves a big problem from the answers to smaller ones.', 'The trick: write each small answer down once, so you never solve it twice.'] },
 
   watch: [

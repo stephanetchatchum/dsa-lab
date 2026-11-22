@@ -166,6 +166,13 @@ const topic: Topic = {
   icon: '🗺️',
   costs: [cost('AND / OR / XOR / shift', 'O(1)'), cost('count 1-bits (Kernighan)', 'O(k)'), cost('all subsets via masks', 'O(2ⁿ)'), cost('quadtree range query', 'O(log n + k)'), cost('k-d nearest (typical)', 'O(log n)')],
 
+  intro: {
+    what: "Two tools for speed. Bit manipulation treats a number as a row of on/off switches. Spatial structures divide space so you can find what is nearby without checking everything.",
+    why: "Bits give speed and tiny memory use. Spatial structures run collision detection in games, “near me” searches in maps and large physics simulations.",
+    builds: "Trees from topic 8 and the subsets idea from topic 6.",
+    goals: ["Use AND, OR, XOR and shifts", "Count bits and list subsets with bitmasks", "Explain how a quadtree and a k-d tree split space", "Use spatial hashing to avoid O(n²) neighbour checks"],
+  },
+
   hook: { frames: hook, lines: ['A number is a row of on/off switches called bits.', 'Spatial structures split space into regions so you can skip everything far away.'] },
 
   watch: [

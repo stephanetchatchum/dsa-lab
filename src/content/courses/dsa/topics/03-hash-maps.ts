@@ -174,6 +174,13 @@ const topic: Topic = {
   icon: '🗝️',
   costs: [cost('get / put / delete', 'O(1)'), cost('…worst case (all collide)', 'O(n)'), cost('resize', 'O(n)'), cost('min / max / sorted', 'O(n)')],
 
+  intro: {
+    what: "A hash map, which Python calls a dict, stores values by key, so you can find anything by its name in one jump instead of searching.",
+    why: "It is the most used data structure in real code: counting, caching, removing duplicates, and turning slow O(n²) code into O(n).",
+    builds: "Arrays from topic 2: a hash map is an array of buckets plus a clever way to pick the bucket.",
+    goals: ["Explain how a key becomes a bucket number", "Explain collisions, chaining and resizing", "Know when a hash map is the right tool, and when it isn’t", "Use dicts and sets to speed up real problems"],
+  },
+
   hook: {
     frames: hook,
     lines: ['A hash map turns a key into a slot number, like a coat-check ticket.', 'So finding a value by its key takes one jump, not a search.'],

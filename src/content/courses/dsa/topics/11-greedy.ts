@@ -134,6 +134,13 @@ const topic: Topic = {
   icon: '🪙',
   costs: [cost('sort + one pass', 'O(n log n)'), cost('greedy with a heap', 'O(n log n)'), cost('the pass itself', 'O(n)')],
 
+  intro: {
+    what: "A greedy algorithm builds an answer by always taking the choice that looks best right now, and never going back.",
+    why: "When it works, it is the simplest and fastest solution there is. Knowing when it fails is just as important, and leads straight into dynamic programming.",
+    builds: "Sorting from topic 7 and heaps from topic 8: most greedy algorithms sort first or keep a heap.",
+    goals: ["Recognise a greedy algorithm", "Prove a greedy rule works, or find a counterexample", "Schedule the most meetings", "Use a heap to make greedy choices fast"],
+  },
+
   hook: { frames: () => coinFrames(6, [1, 3, 4], [3, 3]), lines: ['A greedy algorithm makes the choice that looks best right now and never looks back.', 'It’s fast and simple, but only correct when you can prove the local choice can’t hurt later.'] },
 
   watch: [
