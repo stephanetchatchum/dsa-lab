@@ -1,9 +1,9 @@
-import type { StepKind } from '../types';
 
 export interface TopicProgress {
   /** index of the step the learner is on */
   step: number;
-  done: StepKind[];
+  /** keys of finished steps, e.g. 'watch' or 'lesson:1' */
+  done: string[];
   completedAt?: number;
   /** "write it back" answer (step 3) */
   recall?: string;

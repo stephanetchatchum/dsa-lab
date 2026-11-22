@@ -16,6 +16,8 @@ export interface StepProps {
   pkey: string;
   /** a step can block Next until something is done */
   setCanNext: (ok: boolean) => void;
+  /** lesson part being shown (lesson step only) */
+  part?: number;
 }
 
 const cmTheme = EditorView.theme(

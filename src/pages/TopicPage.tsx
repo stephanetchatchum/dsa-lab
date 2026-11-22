@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState, type ComponentType } from 'react';
 import type { StepKind } from '../types';
-import { getCourse, getTopic, STEP_LABEL, stepsFor, topicKey } from '../content/registry';
+import { getCourse, getTopic, stepLabel, stepsFor, topicKey } from '../content/registry';
 import { ensureTopic, useProgress } from '../state/progress';
 import { useSettings } from '../state/settings';
 import { go, href } from '../router';
@@ -66,8 +66,10 @@ export function TopicPage({ cid, tid, stepParam }: { cid: string; tid: string; s
       </div>
     );
   }
-  const kind = steps[idx];
+  const ref = steps[idx];
+  const kind = ref.kind;
   const View = STEP_VIEW[kind];
+  const nextRef = steps[idx + 1];
   const last = idx === steps.length - 1;
   const ti = lc.topics.findIndex((t) => t.id === tid);
   const nextTopic = lc.topics[ti + 1];
@@ -75,7 +77,7 @@ export function TopicPage({ cid, tid, stepParam }: { cid: string; tid: string; s
   function next() {
     update((d) => {
       const t = ensureTopic(d, pkey);
-      if (!t.done.includes(kind)) t.done.push(kind);
+      if (!t.done.includes(ref.key)) t.done.push(ref.key);
       if (last && !t.completedAt) t.completedAt = Date.now();
     });
     if (last) go(nextTopic ? `learn/${cid}/${nextTopic.id}/1` : '');
@@ -96,27 +98,27 @@ export function TopicPage({ cid, tid, stepParam }: { cid: string; tid: string; s
           <nav className="prog" aria-label="Steps">
             {steps.map((k, i) => (
               <button
-                key={k}
-                title={`${i + 1}. ${STEP_LABEL[k]}`}
-                aria-label={`Step ${i + 1}: ${STEP_LABEL[k]}`}
+                key={k.key}
+                title={`${i + 1}. ${stepLabel(k)}`}
+                aria-label={`Step ${i + 1}: ${stepLabel(k)}`}
                 aria-current={i === idx ? 'step' : undefined}
                 onClick={() => go(`learn/${cid}/${tid}/${i + 1}`)}
               >
                 <span
-                  className={`${st.theme === 'blocks' ? 'brick' : 'tally'} ${i === idx ? 'now' : saved.done.includes(k) ? 'done' : ''}`}
+                  className={`${st.theme === 'blocks' ? 'brick' : 'tally'} ${i === idx ? 'now' : saved.done.includes(k.key) ? 'done' : ''}`}
                 />
               </button>
             ))}
           </nav>
           <div className="steplabel">
-            step <b>{idx + 1}</b> of {steps.length} — {STEP_LABEL[kind]}
+            step <b>{idx + 1}</b> of {steps.length} — {stepLabel(ref)}
           </div>
           <button className={`btn sm ${st.focus ? 'on' : ''}`} onClick={() => st.set({ focus: !st.focus })} title="Hide everything except this step">
             ◎ Focus
           </button>
         </header>
         <section className="step" key={`${pkey}/${idx}`}>
-          <View course={lc.course} topic={topic} pkey={pkey} setCanNext={setCanNext} />
+          <View course={lc.course} topic={topic} pkey={pkey} setCanNext={setCanNext} part={ref.part} />
         </section>
       </div>
       <footer className="footer">
@@ -127,7 +129,7 @@ export function TopicPage({ cid, tid, stepParam }: { cid: string; tid: string; s
           </button>
         )}
         <button className="btn primary big" onClick={next} disabled={!canNext} title={canNext ? undefined : 'Finish this step first'}>
-          {last ? (nextTopic ? `Finish · next: ${nextTopic.title}` : 'Finish course') : 'Next step'}
+          {last ? (nextTopic ? `Finish · next: ${nextTopic.title}` : 'Finish course') : `Next: ${stepLabel(nextRef)}`}
         </button>
       </footer>
     </>

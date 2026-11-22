@@ -254,6 +254,11 @@ export type LessonBlock =
 export interface LessonSection {
   title: string;
   blocks: LessonBlock[];
+  /**
+   * End the current lesson part after this section and insert this step as a break
+   * (e.g. 'watch' or 'play'), so long lessons are spaced out with something to watch or do.
+   */
+  breakAfter?: StepKind;
 }
 
 /* ---------- Topic & course ---------- */

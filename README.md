@@ -135,6 +135,12 @@ npm run verify -- segment-trees
 which proves every reference solution passes its tests, that the starter code doesn't, and that every
 animation frame is well-formed.
 
+### Lessons and spacing
+
+`lesson` is a list of sections. Mark a section with `breakAfter: 'watch'` (or `'play'`, `'predict'`…) to end a
+lesson part there and slot that step in as a break. Big-O, for example, runs:
+Learn part 1 → Watch → Learn part 2 → Play → Learn part 3 → Write it back → … Keep parts to about 4–5 sections.
+
 ### How animations work
 
 An animation is a list of **frames**. Each frame is a `Scene` (a list of primitives: `cell`, `edge`,

@@ -46,8 +46,56 @@ const has: Record<StepKind, (t: Topic) => boolean> = {
   recap: (t) => !!(t.quiz?.length || true),
 };
 
-/** Steps a topic actually has, in the course's order. */
-export const stepsFor = (c: Course, t: Topic): StepKind[] => c.steps.filter((k) => has[k](t));
+export interface StepRef {
+  /** unique within the topic, used for progress */
+  key: string;
+  kind: StepKind;
+  /** lesson part index (lesson steps only) */
+  part?: number;
+  parts?: number;
+}
+
+/** Split a lesson into parts at sections marked `breakAfter`. */
+export function lessonParts(t: Topic): { from: number; to: number; breakAfter?: StepKind }[] {
+  const out: { from: number; to: number; breakAfter?: StepKind }[] = [];
+  const secs = t.lesson ?? [];
+  let from = 0;
+  secs.forEach((s, i) => {
+    if (s.breakAfter || i === secs.length - 1) {
+      out.push({ from, to: i, breakAfter: s.breakAfter });
+      from = i + 1;
+    }
+  });
+  return out;
+}
+
+/**
+ * The steps a topic actually has. A lesson split into parts is interleaved with the
+ * steps named in `breakAfter`, so learning is spaced out: read a bit, watch, read, play…
+ */
+export function stepsFor(c: Course, t: Topic): StepRef[] {
+  const base = c.steps.filter((k) => has[k](t));
+  if (!base.includes('lesson')) return base.map((k) => ({ key: k, kind: k }));
+  const parts = lessonParts(t);
+  const used = new Set<StepKind>(['lesson']);
+  const inner: StepRef[] = [];
+  parts.forEach((p, i) => {
+    inner.push({ key: `lesson:${i}`, kind: 'lesson', part: i, parts: parts.length });
+    if (p.breakAfter && base.includes(p.breakAfter) && !used.has(p.breakAfter)) {
+      inner.push({ key: p.breakAfter, kind: p.breakAfter });
+      used.add(p.breakAfter);
+    }
+  });
+  const out: StepRef[] = [];
+  for (const k of base) {
+    if (k === 'lesson') out.push(...inner);
+    else if (!used.has(k)) out.push({ key: k, kind: k });
+  }
+  return out;
+}
+
+export const stepLabel = (r: StepRef) =>
+  r.kind === 'lesson' && (r.parts ?? 1) > 1 ? `Learn · part ${(r.part ?? 0) + 1} of ${r.parts}` : STEP_LABEL[r.kind];
 
 export const STEP_LABEL: Record<StepKind, string> = {
   hook: 'Hook',

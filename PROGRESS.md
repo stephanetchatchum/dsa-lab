@@ -44,6 +44,8 @@ starter code does not, and every animation frame is valid.
 - [x] Audio engine rewritten for cross-browser reliability (Chrome no-onend bug, Safari cancel quirks, iOS tap rule,
       no word-boundary events, no voices). All audio controls tested against simulations of each; Settings has “Test my voice”
 - [x] Concept-first order: “Learn the concept” is step 1 and opens with context; analogy moved inside the lesson
+- [x] Spaced-out flow: lessons split into parts of ≤ 5 sections, with Watch / Play breaks in between
+      (Learn 1 → Watch → Learn 2 → Play → Learn 3 → write it back → …). Set with `breakAfter` on a section.
 - [x] Lesson: 1. Big-O (sample, awaiting approval)
 - [ ] Lessons for topics 2–13 (same structure: where this fits → what it is → picture it → how it works → why → costs → Python → pitfalls → science → summary)
 - [x] README (setup, run, deploy, Supabase, adding topics/courses)

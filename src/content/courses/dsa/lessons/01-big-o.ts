@@ -50,6 +50,7 @@ export function bigOLesson(fig: { hook: () => Frame[]; race: () => Frame[]; nest
     },
     {
       title: 'The precise definition',
+      breakAfter: 'watch',
       blocks: [
         { p: 'Formally, a function f(n) is **O(g(n))** if there are constants c and n₀ such that f(n) ≤ c · g(n) for every n ≥ n₀. In words: past some point, f never grows faster than a constant multiple of g.' },
         { note: '3n + 5 is O(n). Choose c = 4 and n₀ = 5. For every n of at least 5, 3n + 5 is at most 3n + n, which is 4n. The definition is satisfied.', kind: 'example' },
@@ -97,6 +98,7 @@ export function bigOLesson(fig: { hook: () => Frame[]; race: () => Frame[]; nest
     },
     {
       title: 'Amortised cost: cheap on average',
+      breakAfter: 'play',
       blocks: [
         { p: 'Some operations are usually cheap but occasionally expensive. Appending to a Python list normally takes one step. But when the list’s hidden array is full, Python must allocate a bigger array and copy everything over: O(n) for that one append.' },
         { p: 'Because the array grows by a multiplying factor, those copies get rarer and rarer. Spread the occasional big copy across all the cheap appends, and each append averages out to a constant. We call that **amortised O(1)**.' },

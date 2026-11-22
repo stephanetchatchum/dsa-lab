@@ -8,6 +8,7 @@ import { Stage } from '../viz/Stage';
 import { CodeView } from '../viz/CodeView';
 import { md } from '../speech/md';
 import type { StepProps } from './common';
+import { lessonParts } from '../content/registry';
 
 const NOTE: Record<string, { label: string; icon: string }> = {
   why: { label: 'Why it works', icon: '💡' },
@@ -101,8 +102,20 @@ function Figure({ make, caption }: { make: () => import('../types').Frame[]; cap
   );
 }
 
-export function LessonStep({ topic }: StepProps) {
-  const sections = topic.lesson!;
+const BREAK_TEXT: Record<string, string> = {
+  watch: 'Good place to pause. Take a breath, then next you’ll **watch it move**: the animations show what you just read.',
+  play: 'Nice. Stretch for a moment. Next you’ll **try it yourself**: run the algorithms and see the costs.',
+  predict: 'Quick break. Next you’ll **predict** what happens before the animation shows you.',
+  trace: 'Short break. Next you’ll **trace the code** line by line.',
+  recall: 'Pause here. Next you’ll **write it back** from memory.',
+};
+
+export function LessonStep({ topic, part = 0 }: StepProps) {
+  const all = topic.lesson!;
+  const parts = lessonParts(topic);
+  const range = parts[Math.min(part, parts.length - 1)] ?? { from: 0, to: all.length - 1 };
+  const sections = all.slice(range.from, range.to + 1);
+  const isLast = part >= parts.length - 1;
   const st = useSettings();
   const rs = useReader();
   const refs = useRef<(HTMLElement | null)[]>([]);
@@ -140,12 +153,12 @@ export function LessonStep({ topic }: StepProps) {
             {rs.playing ? '❚❚ Pause' : rs.idx > 0 ? '▶ Resume listening' : '▶ Listen to the whole lesson'}
           </button>
           <span className="dim">
-            About {minutes} min of listening · {sections.length} parts · double-click any paragraph to listen from there
+            {parts.length > 1 ? `Part ${part + 1} of ${parts.length} · ` : ''}about {minutes} min · double-click any paragraph to listen from there
           </span>
         </div>
         {sections.map((s, si) => (
           <section key={si} className="lsec" data-sec={si} ref={(el) => void (refs.current[si] = el)}>
-            <Say as="h2" className="lh" text={`${si + 1}. ${s.title}`} />
+            <Say as="h2" className="lh" text={`${range.from + si + 1}. ${s.title}`} />
             {s.blocks.map((b, bi) => (
               <Fragment key={bi}>
                 <Block b={b} />
@@ -153,10 +166,24 @@ export function LessonStep({ topic }: StepProps) {
             ))}
           </section>
         ))}
+        <aside className="lbreak">
+          <span className="lbreak-ic" aria-hidden>
+            {isLast ? '🎉' : '☕'}
+          </span>
+          <Say
+            as="p"
+            btn={false}
+            text={
+              isLast
+                ? 'That’s the whole lesson. Next you’ll **write it back** in your own words, then practise.'
+                : BREAK_TEXT[range.breakAfter ?? 'watch'] ?? 'Good place to pause before the next part.'
+            }
+          />
+        </aside>
       </article>
       <nav className="ltoc no-tts" aria-label="Lesson parts">
-        <div className="panel-title">In this lesson</div>
-        <ol>
+        <div className="panel-title">{parts.length > 1 ? `Part ${part + 1} of ${parts.length}` : 'In this lesson'}</div>
+        <ol start={range.from + 1} style={{ counterReset: `s ${range.from}` }}>
           {sections.map((s, si) => (
             <li key={si} className={si === cur ? 'on' : si < cur ? 'past' : ''}>
               <button
@@ -172,6 +199,11 @@ export function LessonStep({ topic }: StepProps) {
             </li>
           ))}
         </ol>
+        {parts.length > 1 && !isLast && (
+          <p className="dim" style={{ fontSize: '.9rem', marginTop: '.8rem' }}>
+            Coming later: {all.slice(range.to + 1).map((x) => x.title).join(' · ')}
+          </p>
+        )}
         <p className="dim" style={{ fontSize: '.85rem', marginTop: '.8rem' }}>
           Space: play / pause · ← →: previous / next line · Esc: stop
         </p>

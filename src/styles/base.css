@@ -397,3 +397,7 @@ html[data-theme='blocks'] .lnote.science { border-left-color: var(--done); } htm
 .lesson .tablewrap { margin-bottom: 1.3rem; }
 
 .rstatus.rerr { color: var(--danger); min-width: 0; max-width: 32em; font-size: .85rem; }
+
+.lbreak { display: flex; gap: .9rem; align-items: center; padding: 1.1rem 1.3rem; border-radius: 16px; border: 2px dashed var(--rule); margin: 1rem 0 2rem; }
+.lbreak p { margin: 0; font-size: 1.15rem; line-height: 1.6; }
+.lbreak-ic { font-size: 1.8rem; }
