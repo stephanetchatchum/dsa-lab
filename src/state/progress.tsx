@@ -16,6 +16,8 @@ interface Ctx {
   topic: (key: string) => TopicProgress;
   replace: (d: ProgressDoc) => void;
   reloadRemote: () => Promise<void>;
+  /** Erase all progress, or just one topic when a topic key is given. Saves immediately. */
+  reset: (topicKey?: string) => Promise<void>;
 }
 const ProgressCtx = createContext<Ctx>(null as unknown as Ctx);
 
@@ -86,11 +88,37 @@ export function ProgressProvider({ children }: { children: ReactNode }) {
     });
   }, []);
 
+  const reset = useCallback(async (key?: string) => {
+    window.clearTimeout(timer.current);
+    let next: ProgressDoc;
+    if (!key) next = { ...emptyDoc(), updatedAt: Date.now() };
+    else {
+      next = structuredClone(doc);
+      delete next.topics[key];
+      const own = (k: string) => k.startsWith(key + '/');
+      for (const k of Object.keys(next.problems)) if (own(k)) delete next.problems[k];
+      for (const k of Object.keys(next.code)) if (own(k)) delete next.code[k];
+      next.updatedAt = Date.now();
+    }
+    loaded.current = false; // skip the debounced save; we save right now
+    setDoc(next);
+    await localStore.save(next);
+    if (remoteOn.current) {
+      try {
+        await supabaseStore.save(next);
+        setSync('synced');
+      } catch {
+        setSync('error');
+      }
+    }
+    loaded.current = true;
+  }, [doc]);
+
   const topic = useCallback((key: string) => doc.topics[key] ?? blankTopic(), [doc]);
 
   return (
     <ProgressCtx.Provider
-      value={{ doc, sync, syncEmail, update, topic, replace: (d) => setDoc({ ...d, updatedAt: Date.now() }), reloadRemote }}
+      value={{ doc, sync, syncEmail, update, topic, replace: (d) => setDoc({ ...d, updatedAt: Date.now() }), reloadRemote, reset }}
     >
       {ready ? children : <div className="page dim" role="status">Loading your progress…</div>}
     </ProgressCtx.Provider>

@@ -44,6 +44,9 @@ p { margin: 0; }
 .btn.ghost { background: transparent; border-color: transparent; box-shadow: none; color: var(--dim); }
 .btn.sm { min-height: 36px; padding: .3em .75em; font-size: .85rem; border-radius: 10px; box-shadow: 3px 3px 0 var(--ink); }
 .btn.on { background: var(--curr); color: var(--ink); }
+.btn.danger { background: var(--danger); color: var(--ink); }
+.reset-panel { border-top: 2px dashed var(--line, currentColor); padding-top: 1rem; margin-top: .5rem; }
+.reset-panel select { min-height: 44px; }
 html[data-theme='blocks'] .btn { font-family: var(--font-block); }
 /* chalk: outlined pills, no hard shadow */
 html[data-theme='chalk'] .btn {

@@ -6,6 +6,7 @@ import { signIn, signOut, supabaseConfigured } from '../storage/supabase';
 import { Say } from '../speech/Say';
 import { useOffline } from '../state/offline';
 import { reader, readerSupported } from '../speech/reader';
+import { allCourses, topicKey } from '../content/registry';
 
 const THEMES: { id: Theme; name: string; text: string }[] = [
   { id: 'mix', name: 'Mix', text: 'Chalkboard with solid blocks. The default.' },
@@ -24,7 +25,7 @@ export function exportProgress(doc: ProgressDoc) {
 
 export function Settings() {
   const st = useSettings();
-  const { doc, replace, sync, syncEmail, reloadRemote } = useProgress();
+  const { doc, replace, sync, syncEmail, reloadRemote, reset } = useProgress();
   const file = useRef<HTMLInputElement>(null);
   const [msg, setMsg] = useState('');
   const [email, setEmail] = useState('');
@@ -127,6 +128,7 @@ export function Settings() {
           <input ref={file} type="file" accept="application/json" hidden onChange={(e) => e.target.files?.[0] && onImport(e.target.files[0])} />
         </div>
         {msg && <div role="status">{msg}</div>}
+        <ResetPanel doc={doc} reset={reset} />
         {supabaseConfigured ? (
           syncEmail ? (
             <div className="row">
@@ -155,6 +157,70 @@ export function Settings() {
           <Say className="dim" text="Progress is saved in this browser. To sync across devices, add Supabase keys (see the README)." />
         )}
       </section>
+    </div>
+  );
+}
+
+type Confirm = { key?: string; label: string } | null;
+
+function ResetPanel({ doc, reset }: { doc: ProgressDoc; reset: (key?: string) => Promise<void> }) {
+  const [confirm, setConfirm] = useState<Confirm>(null);
+  const [done, setDone] = useState('');
+  const started = allCourses().flatMap((lc) =>
+    lc.topics
+      .map((t) => ({ key: topicKey(lc.course.id, t.id), title: t.title }))
+      .filter(({ key }) => doc.topics[key] || Object.keys(doc.problems).some((k) => k.startsWith(key + '/')) || Object.keys(doc.code).some((k) => k.startsWith(key + '/'))),
+  );
+  const [pick, setPick] = useState('');
+  const chosen = started.find((t) => t.key === pick) ?? started[0];
+
+  async function go() {
+    if (!confirm) return;
+    await reset(confirm.key);
+    setDone(confirm.key ? `${confirm.label} was reset.` : 'All progress was erased.');
+    setConfirm(null);
+  }
+
+  return (
+    <div className="col reset-panel">
+      <div className="panel-title">Reset progress</div>
+      <p className="dim">Tip: export first if you might want this progress back.</p>
+      {confirm ? (
+        <div className="row" role="alertdialog" aria-label="Confirm reset">
+          <span>
+            {confirm.key ? <>Reset <b>{confirm.label}</b>? Its steps, answers, saved code and solved problems will be erased.</> : <>Erase <b>all</b> progress, saved code, answers and your streak?</>} This can’t be undone.
+          </span>
+          <button className="btn danger" onClick={go} autoFocus>
+            Yes, reset
+          </button>
+          <button className="btn" onClick={() => setConfirm(null)}>
+            Cancel
+          </button>
+        </div>
+      ) : (
+        <>
+          {started.length > 0 && (
+            <div className="row">
+              <select aria-label="Topic to reset" value={chosen?.key} onChange={(e) => setPick(e.target.value)}>
+                {started.map((t) => (
+                  <option key={t.key} value={t.key}>
+                    {t.title}
+                  </option>
+                ))}
+              </select>
+              <button className="btn" onClick={() => chosen && setConfirm({ key: chosen.key, label: chosen.title })}>
+                Reset this topic
+              </button>
+            </div>
+          )}
+          <div className="row">
+            <button className="btn danger" onClick={() => setConfirm({ label: 'everything' })}>
+              Reset all progress
+            </button>
+          </div>
+        </>
+      )}
+      {done && <div role="status">{done}</div>}
     </div>
   );
 }

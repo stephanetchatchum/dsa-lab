@@ -59,3 +59,4 @@ starter code does not, and every animation frame is valid.
 - A second course (e.g. Linear Algebra) using the same engine: see README → Add a course.
 - Sound effects for correct / wrong answers (kept off for now to avoid distraction).
 - Supabase is untested against a live project from here (no network access to Supabase during the build).
+- [x] Reset progress (Settings → Your progress: reset one topic or everything, with confirmation)
