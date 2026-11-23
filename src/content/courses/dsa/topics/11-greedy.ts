@@ -1,5 +1,6 @@
 import type { Frame, Prim, Role, Topic } from '../../../../types';
 import { arrayRow, cost, Frames, line, scene, txt } from '../../../lib/viz';
+import { greedyLesson } from '../lessons/11-greedy';
 
 /* ---------------- coins ---------------- */
 function coinFrames(amount: number, coins: number[], best?: number[]): Frame[] {
@@ -150,6 +151,7 @@ const topic: Topic = {
     { id: 'shortest', title: 'A wrong rule', frames: () => scheduleFrames([[0, 5], [4, 6], [5, 10]], 'short') },
   ],
 
+  lesson: greedyLesson({ coins: () => coinFrames(63, [1, 5, 10, 25]), trap: () => coinFrames(6, [1, 3, 4], [3, 3]), meetings: () => scheduleFrames(CLASSIC, 'end'), wrongRule: () => scheduleFrames([[0, 5], [4, 6], [5, 10]], 'short') }),
   recall: {
     prompt: 'What does a greedy algorithm do, and why must you be careful before trusting one? Give the rule that works for booking the most meetings.',
     model:

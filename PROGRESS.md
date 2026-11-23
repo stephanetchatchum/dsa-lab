@@ -47,7 +47,10 @@ starter code does not, and every animation frame is valid.
 - [x] Spaced-out flow: lessons split into parts of ≤ 5 sections, with Watch / Play breaks in between
       (Learn 1 → Watch → Learn 2 → Play → Learn 3 → write it back → …). Set with `breakAfter` on a section.
 - [x] Lesson: 1. Big-O (sample, awaiting approval)
-- [ ] Lessons for topics 2–13 (same structure: where this fits → what it is → picture it → how it works → why → costs → Python → pitfalls → science → summary)
+- [x] Offline mode: PWA precaches the whole app incl. bundled Python; tested with the network cut (lessons,
+      animations, playground, fonts, Python tests all work)
+- [x] Lessons 2–7 written and verified
+- [x] Lessons 8–13 (trees, tries, graphs, greedy, DP, bits & spatial) (same structure: where this fits → what it is → picture it → how it works → why → costs → Python → pitfalls → science → summary)
 - [x] README (setup, run, deploy, Supabase, adding topics/courses)
 
 **Status: complete.** 13 topics, 39 problems, 351 reference tests passing.

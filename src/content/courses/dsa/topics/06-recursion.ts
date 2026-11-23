@@ -1,6 +1,7 @@
 import type { Frame, Prim, Role, Topic } from '../../../../types';
 import { cell, cost, edge, Frames, ptr, region, scene, txt } from '../../../lib/viz';
 import { layoutTree, treePrims, type GNode } from '../../../lib/tree';
+import { recursionLesson } from '../lessons/06-recursion';
 
 /* ---------------- call-stack picture ---------------- */
 interface CallFrame {
@@ -204,6 +205,7 @@ const topic: Topic = {
     { id: 'queens', title: 'Backtracking: 4 queens', frames: () => queensFrames(4) },
   ],
 
+  lesson: recursionLesson({ hook, stack: () => factFrames(4, false), tree: () => fibFrames(5), subsets: () => subsetFrames(), queens: () => queensFrames(4) }),
   recall: {
     prompt: 'What two parts does every recursive function need? And what does “backtracking” mean?',
     model:

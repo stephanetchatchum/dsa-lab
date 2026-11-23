@@ -2,7 +2,10 @@
 // Runs Python (Pyodide) off the main thread so an infinite loop can be killed.
 import harness from './harness.py?raw';
 
-const BASE = (import.meta.env.VITE_PYODIDE_URL as string) || 'https://cdn.jsdelivr.net/npm/pyodide@314.0.8/';
+// Python is bundled with the site (see vite.config.ts) so it works offline.
+// VITE_PYODIDE_URL can point elsewhere, e.g. a CDN.
+const BASE =
+  (import.meta.env.VITE_PYODIDE_URL as string) || new URL(`${import.meta.env.BASE_URL}pyodide/`, self.location.origin).href;
 
 let pyPromise: Promise<any> | null = null;
 function getPy() {

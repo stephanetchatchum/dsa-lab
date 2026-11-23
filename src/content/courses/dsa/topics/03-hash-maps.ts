@@ -1,5 +1,6 @@
 import type { Frame, Prim, Role, Topic } from '../../../../types';
 import { arrayRow, cell, cost, edge, Frames, ptr, region, scene, spread, txt } from '../../../lib/viz';
+import { hashLesson } from '../lessons/03-hash-maps';
 
 /* A teaching hash: sum of character codes mod m. Simple enough to do by hand. */
 export const hsum = (k: string) => [...k].reduce((a, c) => a + c.charCodeAt(0), 0);
@@ -193,6 +194,7 @@ const topic: Topic = {
     { id: 'resize', title: 'Resizing', frames: resize, costs: [cost('put (amortised)', 'O(1)'), cost('one resize', 'O(n)')] },
   ],
 
+  lesson: hashLesson({ hook, keyToBucket, collisions, lookup, resize }),
   recall: {
     prompt: 'Explain how a hash map finds a value by key. What happens when two keys land in the same bucket?',
     model:

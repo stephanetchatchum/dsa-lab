@@ -1,5 +1,6 @@
 import type { Frame, Prim, Role, Topic } from '../../../../types';
 import { cell, cost, edge, Frames, listPrims, ptr, scene, txt, type LLNode } from '../../../lib/viz';
+import { linkedLessons } from '../lessons/05-linked-lists';
 
 let uid = 0;
 const nd = (v: number): LLNode => ({ id: `L${uid++}`, v });
@@ -189,6 +190,7 @@ const topic: Topic = {
     { id: 'reverse', title: 'Reverse', frames: reverseFrames, code: REVERSE_CODE, costs: [cost('reverse', 'O(n)', 'O(1)')] },
   ],
 
+  lesson: linkedLessons({ hook, nodes: nodesClip, walk: walkClip, insert: insertClip, del: deleteClip, reverse: reverseFrames }),
   recall: {
     prompt: 'How do you insert a node after another node, and why does the order of the two steps matter?',
     model:

@@ -1,6 +1,7 @@
 import type { Frame, Prim, Role, Topic } from '../../../../types';
 import { arrayRow, cell, cost, edge, Frames, scene, spread, txt } from '../../../lib/viz';
 import { layoutTree, treePrims, type GNode } from '../../../lib/tree';
+import { dpLesson } from '../lessons/12-dynamic-programming';
 
 /* dp row: cells d0..dn with index labels */
 const dpRow = (vals: (number | string)[], roles: Record<number, Role> = {}, y = 250, glow: number[] = []) =>
@@ -165,6 +166,7 @@ const topic: Topic = {
     { id: 'grid', title: '2D table: grid paths', frames: () => gridFrames(), costs: [cost('grid paths', 'O(n·m)', 'O(n·m)')] },
   ],
 
+  lesson: dpLesson({ hook, memo: () => memoFrames(6), coins: () => coinFrames([1, 3, 4], 6), grid: () => gridFrames() }),
   recall: {
     prompt: 'What two things make a problem a good fit for dynamic programming? What’s the difference between memoisation and a bottom-up table?',
     model:

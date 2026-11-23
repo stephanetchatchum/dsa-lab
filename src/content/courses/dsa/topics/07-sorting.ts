@@ -1,5 +1,6 @@
 import type { Frame, Prim, Role, Topic } from '../../../../types';
 import { arrayRow, bar, cost, Frames, ptr, region, scene, spread, txt } from '../../../lib/viz';
+import { sortingLesson } from '../lessons/07-sorting';
 
 interface It {
   id: string;
@@ -200,6 +201,7 @@ const topic: Topic = {
     { id: 'binary', title: 'Binary search', frames: () => bsFrames([1, 3, 5, 7, 9, 11, 13, 15, 17], 13, false), code: BS_CODE, costs: [cost('binary search', 'O(log n)', 'O(1)')] },
   ],
 
+  lesson: sortingLesson({ hook, insertion: () => insertionFrames([5, 2, 4, 6, 1, 3]), merge: () => mergeFrames([38, 27, 43, 3, 9, 82, 10, 21]), quick: () => partitionFrames([8, 3, 5, 1, 9, 2, 7]), binary: () => bsFrames([1, 3, 5, 7, 9, 11, 13, 15, 17], 13, false) }),
   recall: {
     prompt: 'Why is merge sort O(n log n)? And what does binary search need before it can work?',
     model:

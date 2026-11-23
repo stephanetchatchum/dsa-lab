@@ -6,12 +6,14 @@ import { TopicPage } from './pages/TopicPage';
 import { Compare } from './pages/Compare';
 import { Review, dueReviews } from './pages/Review';
 import { Settings } from './pages/Settings';
+import { useOffline } from './state/offline';
 
 export function App() {
   const r = useRoute();
   const { doc } = useProgress();
   const due = dueReviews(doc).length;
   const firstCourse = allCourses()[0]?.course.id ?? '';
+  const off = useOffline();
 
   let page;
   if (r[0] === 'learn' && r[1] && r[2]) page = <TopicPage key={`${r[1]}/${r[2]}`} cid={r[1]} tid={r[2]} stepParam={r[3]} />;
@@ -36,6 +38,11 @@ export function App() {
         {nav('review', '↻', 'Review', due)}
         {nav('compare', '⚖', 'Compare')}
         <span className="sp" />
+        {!off.online && (
+          <span className="offline-pill" title={off.ready ? 'No internet, but everything works offline' : 'No internet'}>
+            {off.ready ? '✈ Offline' : '⚠ Offline'}
+          </span>
+        )}
         {nav('settings', '⚙', 'Settings')}
       </nav>
       <main className="main">{page}</main>

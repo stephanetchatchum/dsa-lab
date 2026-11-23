@@ -1,6 +1,7 @@
 import type { Frame, Prim, Role, Topic } from '../../../../types';
 import { arrayRow, cell, cost, Frames, line, region, scene, spread, txt } from '../../../lib/viz';
 import type { DotP } from '../../../../types';
+import { bitsLesson } from '../lessons/13-bits-spatial';
 
 /* ---------------- bits ---------------- */
 const bitsOf = (n: number, w = 8) => Array.from({ length: w }, (_, i) => (n >> (w - 1 - i)) & 1);
@@ -183,6 +184,7 @@ const topic: Topic = {
     { id: 'kd', title: 'k-d tree', frames: kdFrames, costs: [cost('build', 'O(n log n)'), cost('nearest (typical)', 'O(log n)')] },
   ],
 
+  lesson: bitsLesson({ hook, ops: opsFrames, count: countFrames, masks: maskFrames, quad: quadFrames, kd: kdFrames }),
   recall: {
     prompt: 'What does XOR do, and why is x & (x − 1) useful? Then: how does a quadtree make “what’s near me?” fast?',
     model:

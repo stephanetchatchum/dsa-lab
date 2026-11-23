@@ -1,6 +1,7 @@
 import type { Frame, Prim, Role, Topic } from '../../../../types';
 import { arrayRow, cell, cost, Frames, ptr, scene, spread, txt } from '../../../lib/viz';
 import { binaryPrims, bnode, bstFrom, bstInsert, cloneB, heapPrims, height, inorder, layoutBinary, type BNode } from '../../../lib/tree';
+import { treesLesson } from '../lessons/08-trees';
 
 const TREE_SETUP = `from collections import deque
 
@@ -257,6 +258,7 @@ const topic: Topic = {
     { id: 'heap-pop', title: 'Heap pop', frames: () => heapPopFrames([1, 5, 2, 9, 6, 8, 3]), costs: [cost('pop min', 'O(log n)'), cost('peek', 'O(1)')] },
   ],
 
+  lesson: treesLesson({ hook, inorder: inorderFrames, level: levelFrames, search: () => searchFrames(BASE, 6), insert: () => insertFrames(BASE, 7), balance: balanceFrames, heapPush: () => heapPushFrames([2, 5, 3, 9, 6, 8], 1), heapPop: () => heapPopFrames([1, 5, 2, 9, 6, 8, 3]) }),
   recall: {
     prompt: 'In a binary search tree, where do smaller and bigger values go, and why can searching be fast? What is a heap good for?',
     model:

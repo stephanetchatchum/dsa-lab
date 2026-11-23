@@ -1,5 +1,6 @@
 import type { Frame, Prim, Role, Topic } from '../../../../types';
 import { arrayRow, cell, cost, Frames, ptr, region, scene, spread, txt } from '../../../lib/viz';
+import { stacksLesson } from '../lessons/04-stacks-queues';
 
 interface It {
   id: string;
@@ -180,6 +181,7 @@ const topic: Topic = {
     { id: 'mono', title: 'Monotonic stack', frames: monotonic, costs: [cost('next bigger for all', 'O(n)', 'O(n)')] },
   ],
 
+  lesson: stacksLesson({ hook, stack: stackClip, queue: queueClip, brackets: () => bracketFrames('{[()]}', false), mono: monotonic }),
   recall: {
     prompt: 'What’s the difference between a stack and a queue? Give one real use of each.',
     model:

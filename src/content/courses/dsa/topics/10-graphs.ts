@@ -1,5 +1,6 @@
 import type { Frame, Prim, Role, Topic } from '../../../../types';
 import { arrayRow, cell, cost, edge, Frames, scene, spread, txt } from '../../../lib/viz';
+import { graphsLesson } from '../lessons/10-graphs';
 
 /* ---------------- a fixed, readable graph ---------------- */
 const P: Record<string, [number, number]> = {
@@ -301,6 +302,7 @@ const topic: Topic = {
     { id: 'uf', title: 'Union-find', frames: unionFindFrames, costs: [cost('find / union', 'O(α(n))')] },
   ],
 
+  lesson: graphsLesson({ hook, adj: adjacencyFrames, bfs: () => bfsFrames('A'), dfs: () => dfsFrames('A'), dijkstra: () => dijkstraFrames('A'), topo: topoFrames, uf: unionFindFrames }),
   recall: {
     prompt: 'What’s the difference between BFS and DFS, and when do you need Dijkstra instead of BFS?',
     model:

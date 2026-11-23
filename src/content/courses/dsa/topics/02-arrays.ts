@@ -1,5 +1,6 @@
 import type { Frame, Prim, Role, Topic } from '../../../../types';
 import { arrayRow, cell, cost, Frames, ptr, region, scene, spread, txt } from '../../../lib/viz';
+import { arraysLesson } from '../lessons/02-arrays';
 
 /* Items keep their id when they move, so the animation shows them sliding. */
 interface It {
@@ -213,6 +214,7 @@ const topic: Topic = {
     { id: 'prefix', title: 'Prefix sums', frames: prefix, costs: [cost('Build P', 'O(n)', 'O(n)'), cost('Range sum', 'O(1)')] },
   ],
 
+  lesson: arraysLesson({ hook, addresses, insertShift, twoPointers, window: () => windowFrames(false), prefix }),
   recall: {
     prompt: 'Why is reading a[i] instant, but inserting at the front slow? Then: what does a sliding window avoid redoing?',
     model:

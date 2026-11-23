@@ -1,6 +1,7 @@
 import type { Frame, Prim, Role, Topic } from '../../../../types';
 import { arrayRow, cost, Frames, scene, txt } from '../../../lib/viz';
 import { layoutTree, treePrims, type GNode } from '../../../lib/tree';
+import { triesLesson } from '../lessons/09-tries';
 
 /* ---------------- trie model (pure) ---------------- */
 interface TN {
@@ -175,6 +176,7 @@ const topic: Topic = {
     { id: 'complete', title: 'Autocomplete', frames: () => completeFrames(['car', 'cat', 'cart', 'care', 'dog', 'dot'], 'car'), costs: [cost('completions', 'O(L + k)')] },
   ],
 
+  lesson: triesLesson({ hook, build: () => buildFrames(), search: () => searchFrames(['car', 'cat', 'cart', 'dog'], 'cart'), prefix: () => searchFrames(['cart', 'cat', 'dog'], 'car'), complete: () => completeFrames(['car', 'cat', 'cart', 'care', 'dog', 'dot'], 'car') }),
   recall: {
     prompt: 'How does a trie store words, and why does search cost depend on the word’s length instead of how many words there are?',
     model:

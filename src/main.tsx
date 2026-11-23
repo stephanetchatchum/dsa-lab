@@ -13,6 +13,9 @@ import './styles/base.css';
 import { SettingsProvider } from './state/settings';
 import { ProgressProvider } from './state/progress';
 import { App } from './App';
+import { registerOffline } from './state/offline';
+
+registerOffline();
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

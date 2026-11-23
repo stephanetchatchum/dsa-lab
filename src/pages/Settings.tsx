@@ -4,6 +4,7 @@ import { useProgress } from '../state/progress';
 import { mergeDocs, type ProgressDoc } from '../storage/types';
 import { signIn, signOut, supabaseConfigured } from '../storage/supabase';
 import { Say } from '../speech/Say';
+import { useOffline } from '../state/offline';
 import { reader, readerSupported } from '../speech/reader';
 
 const THEMES: { id: Theme; name: string; text: string }[] = [
@@ -28,6 +29,7 @@ export function Settings() {
   const [msg, setMsg] = useState('');
   const [email, setEmail] = useState('');
   const [voiceMsg, setVoiceMsg] = useState('');
+  const off = useOffline();
 
   async function onImport(f: File) {
     try {
@@ -54,6 +56,21 @@ export function Settings() {
           ))}
         </div>
         <Say className="dim" text={THEMES.find((t) => t.id === st.theme)!.text} />
+      </section>
+
+      <section className="panel col">
+        <div className="panel-title">Offline</div>
+        <Say
+          text={
+            off.ready
+              ? 'Ready to work offline. Lessons, animations, read-aloud and Python are saved on this device. Only LeetCode links and cross-device sync need internet.'
+              : 'Saving the app on this device for offline use. Keep this page open, online, for a minute (about 15 MB, mostly Python).'
+          }
+        />
+        <div className="row">
+          <span className={`chip ${off.ready ? 'r-done' : 'r-curr'}`}>{off.ready ? '✓ Offline ready' : '… Preparing offline copy'}</span>
+          <span className="chip">{off.online ? 'Online now' : 'Offline now'}</span>
+        </div>
       </section>
 
       <section className="panel col">

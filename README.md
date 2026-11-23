@@ -41,9 +41,17 @@ npm run verify       # run every reference solution against its tests in Pyodide
 npm run verify -- arrays hash-maps   # only some topics
 ```
 
-Python runs **in your browser** with [Pyodide](https://pyodide.org). The first run downloads about 10 MB from
-the jsDelivr CDN, then the browser caches it. Code runs in a Web Worker, and anything that runs longer than
-8 seconds is stopped, so an infinite loop can't freeze the page.
+Python runs **in your browser** with [Pyodide](https://pyodide.org), bundled with the site (no CDN). Code runs
+in a Web Worker, and anything that runs longer than 8 seconds is stopped, so an infinite loop can't freeze the page.
+
+### Works offline
+
+The site is a Progressive Web App. On your first online visit it saves everything on the device (about 15 MB,
+mostly Python): pages, lessons, animations, fonts, read-aloud and the Python runtime. After that it opens and works
+with no internet. **Settings → Offline** shows when the offline copy is ready. New versions download automatically
+the next time you're online. On a phone, use “Add to Home Screen” to install it like an app.
+Only LeetCode links and Supabase sync need a connection. Read-aloud offline uses your device's built-in voices.
+(The dev server, `npm run dev`, doesn't register the offline worker; use `npm run build && npm run preview` to try it.)
 
 ## Deploy to Vercel (free)
 
